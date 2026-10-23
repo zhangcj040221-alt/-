@@ -2,12 +2,18 @@ name: Render Remotion Experience
 on:
   workflow_dispatch:
     inputs:
+      project:
+        description: 'Project JSON basename under remotion/projects (e.g. water-cycle)'
+        required: true
+        default: water-cycle
+        type: string
       target:
         description: 'Video to render (one target or all for regression)'
         required: true
         type: choice
-        default: water-cycle
+        default: project
         options:
+          - project
           - water-cycle
           - thunder-music
           - ecosystem-transitions
@@ -26,7 +32,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
-      RENDER_TARGET: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'water-cycle' }}
+      RENDER_TARGET: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'project' }}
+      RENDER_PROJECT: ${{ github.event_name == 'workflow_dispatch' && inputs.project || 'water-cycle' }}
     defaults:
       run:
         working-directory: remotion
@@ -70,13 +77,14 @@ jobs:
         if: env.RENDER_TARGET == 'ecosystem-captions' || env.RENDER_TARGET == 'all'
         run: mkdir -p public && ffmpeg -hide_banner -loglevel error -y -f lavfi -i sine=frequency=440:duration=10:sample_rate=16000 -ac 1 public/audio-cue.wav
       - name: Generate reusable original BGM and SFX
-        if: env.RENDER_TARGET == 'thunder-music' || env.RENDER_TARGET == 'water-cycle' || env.RENDER_TARGET == 'all'
+        if: env.RENDER_TARGET == 'thunder-music' || env.RENDER_TARGET == 'project' || env.RENDER_TARGET == 'water-cycle' || env.RENDER_TARGET == 'all'
         run: python3 scripts/generate_audio_assets.py
       - name: Render selected composition
         run: |
           set -euo pipefail
           case "$RENDER_TARGET" in
-            water-cycle) npm run render:story ;;
+            project) python3 scripts/render_project.py --project "$RENDER_PROJECT" ;;
+            water-cycle) python3 scripts/render_project.py --project water-cycle ;;
             thunder-music) npm run render:thunder-music ;;
             ecosystem-transitions) npm run render:ecosystem ;;
             ecosystem-graphics) npm run render:graphics ;;
@@ -94,6 +102,7 @@ jobs:
         run: |
           set -euo pipefail
           case "$RENDER_TARGET" in
+            project) files=("$RENDER_PROJECT.mp4") ;;
             water-cycle) files=(water-cycle.mp4) ;;
             thunder-music) files=(thunder-music.mp4) ;;
             ecosystem-transitions) files=(ecosystem-transitions.mp4) ;;
@@ -123,12 +132,13 @@ jobs:
           RUN_REF: ${{ github.ref_name }}
           REPOSITORY: ${{ github.repository }}
           SELECTED_TARGET: ${{ env.RENDER_TARGET }}
+          SELECTED_PROJECT: ${{ env.RENDER_PROJECT }}
         working-directory: .
         run: |
           mkdir -p .video-status
           python3 - <<'PY'
           import json,os,datetime
-          status={"run_id":int(os.environ["RUN_ID"]),"attempt":int(os.environ["RUN_ATTEMPT"]),"job_status":os.environ["JOB_RESULT"],"sha":os.environ["RUN_SHA"],"branch":os.environ["RUN_REF"],"run_url":f'https://github.com/{os.environ["REPOSITORY"]}/actions/runs/{os.environ["RUN_ID"]}',"updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"artifact_name":"remotion-"+os.environ["SELECTED_TARGET"]+"-"+os.environ["RUN_ID"],"selected_target":os.environ["SELECTED_TARGET"],"expected_files":([ "ecosystem-transitions.mp4","ecosystem-graphics.mp4","ecosystem-captions.mp4","thunder-music.mp4","water-cycle.mp4"] if os.environ["SELECTED_TARGET"]=="all" else [os.environ["SELECTED_TARGET"]+".mp4"])}
+          status={"run_id":int(os.environ["RUN_ID"]),"attempt":int(os.environ["RUN_ATTEMPT"]),"job_status":os.environ["JOB_RESULT"],"sha":os.environ["RUN_SHA"],"branch":os.environ["RUN_REF"],"run_url":f'https://github.com/{os.environ["REPOSITORY"]}/actions/runs/{os.environ["RUN_ID"]}',"updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"artifact_name":"remotion-"+os.environ["SELECTED_TARGET"]+"-"+os.environ["RUN_ID"],"selected_target":os.environ["SELECTED_TARGET"],"selected_project":os.environ["SELECTED_PROJECT"],"expected_files":([ "ecosystem-transitions.mp4","ecosystem-graphics.mp4","ecosystem-captions.mp4","thunder-music.mp4","water-cycle.mp4"] if os.environ["SELECTED_TARGET"]=="all" else [(os.environ["SELECTED_PROJECT"] if os.environ["SELECTED_TARGET"]=="project" else os.environ["SELECTED_TARGET"])+".mp4"])}
           with open('.video-status/remotion-latest.json','w') as f: json.dump(status,f,ensure_ascii=False,indent=2)
           PY
           git config user.name "github-actions[bot]"
