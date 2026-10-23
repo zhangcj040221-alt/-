@@ -31,16 +31,16 @@ jobs:
         working-directory: .
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Install FFmpeg
+        run: sudo apt-get install -y ffmpeg
+        working-directory: .
       - name: Generate test audio
-        run: python3 -c 'import wave,math,struct,os; os.makedirs("public",exist_ok=True); w=wave.open("public/audio-cue.wav","wb"); w.setnchannels(1); w.setsampwidth(2); w.setframerate(16000); w.writeframes(b"".join(struct.pack("<h",int(7000*math.sin(2*math.pi*440*i/16000))) for i in range(160000))); w.close()'
+        run: mkdir -p public && ffmpeg -hide_banner -loglevel error -y -f lavfi -i sine=frequency=440:duration=10:sample_rate=16000 -ac 1 public/audio-cue.wav
       - name: Render video
         run: |
           npm run render:ecosystem
           npm run render:graphics
           npm run render:captions
-      - name: Install ffprobe
-        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
-        working-directory: .
       - name: Validate video
         run: |
           test -s out/ecosystem-transitions.mp4
