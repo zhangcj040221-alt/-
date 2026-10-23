@@ -51,3 +51,9 @@
 - 新增 src/ecosystem-captions.tsx，采用标准 SRT 字幕、毫秒时间轴和帧同步展示；Composition EcosystemCaptions，脚本 npm run render:captions。
 - Actions 已加入 ecosystem-captions.mp4 渲染和非空检查。尚待确认成功 run、下载 MP4 及实测画面，未完成前不得标记验收通过。
 - 音频轨道尚未接入：当前没有合法可复用的配音或音效素材。不要把纯字幕演示误称为带配音视频。下一步先完成字幕验证，再使用自有/明确授权音频测试 Audio 轨道。
+
+## 音频链路修复（2026-10-23，待验收）
+- 中文字体问题已由 run 39957612297 成功渲染并经画面抽帧验证解决。
+- 首次加入 Audio 引用的 run 39958155806 失败：缺少 audio-cue.wav；已补上在 Actions 中用 Python 标准库自动生成原创 440Hz PCM WAV 的步骤，无外部素材或费用。
+- 最新提交 30d0fee / 2562582：渲染中混入测试音频、ffprobe 检查音轨、ffmpeg volumedetect 排除静音。
+- 仍须等待最新 Actions 运行完成、下载 MP4 实测声音后才能标记通过。440Hz 音调仅用于验证音轨，不代表中文旁白或配音同步已经完成。
