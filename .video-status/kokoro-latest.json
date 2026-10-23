@@ -1,0 +1,8 @@
+{
+  "run_id": 39966474589,
+  "sha": "bedb69d0c6e893b7ca3b6112386e76817a883b44",
+  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39966474589",
+  "job_status": "success",
+  "artifact_name": "kokoro-chinese-tts-smoke-test",
+  "updated_utc": "2026-10-23T14:05:01.850100+00:00"
+}
