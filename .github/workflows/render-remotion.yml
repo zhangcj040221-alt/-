@@ -1,0 +1,36 @@
+name: Render Remotion Experience
+on:
+  workflow_dispatch:
+  push:
+    branches: [remotion-experience]
+    paths:
+      - 'remotion/**'
+      - '.github/workflows/render-remotion.yml'
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: remotion
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Render video
+        run: npm run render
+      - name: Validate video
+        run: |
+          test -s out/remotion-intro.mp4
+          ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate -of default=noprint_wrappers=1 out/remotion-intro.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: remotion-intro-mp4
+          path: remotion/out/remotion-intro.mp4
+          retention-days: 30
+          if-no-files-found: error
