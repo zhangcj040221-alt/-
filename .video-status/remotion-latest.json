@@ -1,11 +1,11 @@
 {
-  "run_id": 39957612297,
+  "run_id": 39958155806,
   "attempt": 1,
-  "job_status": "success",
-  "sha": "0101e95b79e3118e4483d5f323993419850ff921",
+  "job_status": "failure",
+  "sha": "a568d74beffc906334887292e085b745941d2f6f",
   "branch": "main",
-  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39957612297",
-  "updated_utc": "2026-10-23T13:01:47.525068+00:00",
+  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39958155806",
+  "updated_utc": "2026-10-23T13:05:10.753242+00:00",
   "artifact_name": "remotion-ecosystem-validation",
   "expected_files": [
     "ecosystem-transitions.mp4",
