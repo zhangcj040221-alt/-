@@ -1,15 +1,15 @@
 {
-  "run_id": 39952186752,
+  "run_id": 39953873045,
   "attempt": 1,
   "job_status": "success",
-  "sha": "0a1eb4b48ca4117012708301a35851ea4e70a6b0",
+  "sha": "3d2778ce918b3960b08739d6e56b53724891f5a6",
   "branch": "main",
-  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39952186752",
-  "updated_utc": "2026-10-23T12:19:15.778197+00:00",
+  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39953873045",
+  "updated_utc": "2026-10-23T12:33:06.548063+00:00",
   "artifact_name": "remotion-intro-mp4",
   "expected_files": [
     "remotion-intro.mp4",
     "remotion-mg-showcase.mp4",
-    "thunder-explainer.mp4"
+    "thunder-v2.mp4"
   ]
 }
