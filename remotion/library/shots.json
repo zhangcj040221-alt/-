@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "frameRate": 30,
+  "shotTemplates": [
+    {
+      "id": "concept-intro",
+      "label": "概念引入",
+      "durationFrames": 150,
+      "layers": [
+        "title",
+        "hero-visual",
+        "subtitle"
+      ],
+      "transitions": [
+        "fade",
+        "slide"
+      ]
+    },
+    {
+      "id": "step-explainer",
+      "label": "分步解释",
+      "durationFrames": 180,
+      "layers": [
+        "step-label",
+        "icon",
+        "caption",
+        "connector"
+      ],
+      "transitions": [
+        "stagger"
+      ]
+    },
+    {
+      "id": "process-flow",
+      "label": "流程图",
+      "durationFrames": 180,
+      "layers": [
+        "nodes",
+        "paths",
+        "moving-marker"
+      ],
+      "transitions": [
+        "path-reveal"
+      ]
+    },
+    {
+      "id": "cycle-explainer",
+      "label": "循环图",
+      "durationFrames": 180,
+      "layers": [
+        "ring",
+        "stages",
+        "moving-marker"
+      ],
+      "transitions": [
+        "orbit"
+      ]
+    },
+    {
+      "id": "side-by-side",
+      "label": "概念对比",
+      "durationFrames": 150,
+      "layers": [
+        "left",
+        "right",
+        "labels"
+      ],
+      "transitions": [
+        "wipe"
+      ]
+    },
+    {
+      "id": "number-highlight",
+      "label": "数据强调",
+      "durationFrames": 120,
+      "layers": [
+        "value",
+        "unit",
+        "context"
+      ],
+      "transitions": [
+        "count-up"
+      ]
+    },
+    {
+      "id": "recap",
+      "label": "总结复盘",
+      "durationFrames": 150,
+      "layers": [
+        "key-points",
+        "visual-summary"
+      ],
+      "transitions": [
+        "fade"
+      ]
+    }
+  ]
+}
