@@ -41,7 +41,7 @@ def project(name):
     tracks = ([audio["music"]] if audio.get("music") else []) + cues
     for track in tracks:
         file = track.get("file", "")
-        if not isinstance(file, str) or not re.fullmatch(r"sound/[a-zA-Z0-9_-]+\\.(wav|mp3)", file):
+        if not isinstance(file, str) or not re.fullmatch(r"sound/[a-zA-Z0-9_-]+\.(wav|mp3)", file):
             raise ValueError("Audio must reference an approved sound/ asset")
         if not (ROOT / "public" / file).is_file():
             raise ValueError("Audio asset missing: " + file)
