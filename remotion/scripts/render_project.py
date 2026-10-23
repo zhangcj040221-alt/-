@@ -31,7 +31,7 @@ def project(name):
             raise ValueError("Accent must be a hex color")
         visual = scene.get("visual")
         if visual is not None:
-            if not isinstance(visual, dict) or visual.get("type") not in ("process", "cycle", "compare", "stat"):
+            if not isinstance(visual, dict) or visual.get("type") not in ("process", "cycle", "compare", "stat", "water-cycle"):
                 raise ValueError("Unsupported MG visual type")
             items = visual.get("items", [])
             if not isinstance(items, list) or len(items) > 6 or any(not isinstance(item, str) or len(item) > 30 for item in items):
