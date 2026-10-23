@@ -1,0 +1,45 @@
+name: Render Revideo Demo
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/render-revideo.yml'
+permissions:
+  contents: read
+concurrency:
+  group: revideo-demo-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      DISABLE_TELEMETRY: 'true'
+      PUPPETEER_SKIP_DOWNLOAD: '1'
+      CHROME_BIN: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check system render dependencies
+        run: |
+          node --version
+          google-chrome --version
+          ffmpeg -version | head -n 1
+      - name: Install pinned Revideo dependencies
+        run: npm install --no-audit --no-fund
+      - name: Render 4-second MP4 headlessly
+        run: npm run render
+      - name: Validate MP4
+        run: |
+          test -s out/hello-revideo.mp4
+          ffprobe -v error -show_entries format=duration,size -of default=noprint_wrappers=1 out/hello-revideo.mp4
+          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,nb_frames -of default=noprint_wrappers=1 out/hello-revideo.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: revideo-demo-mp4
+          path: out/hello-revideo.mp4
+          retention-days: 2
+          if-no-files-found: error
