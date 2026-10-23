@@ -31,5 +31,5 @@ export default makeScene2D('hello', function* (view) {
   yield* waitFor(1.2);
   yield* all(disk().scale(1.16, 0.35), disk().rotation(45, 0.35));
   yield* disk().scale(1, 0.35);
-  yield* waitFor(0.3);
+  yield* waitFor(1.7);
 });
