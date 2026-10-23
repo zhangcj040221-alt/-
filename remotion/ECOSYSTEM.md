@@ -34,3 +34,7 @@
 
 ## 实际渲染复验
 - 2026-10-23：按用户要求重新触发官方 transitions + shapes + paths 的云端渲染；以新 Actions 运行结果为准，未完成前不标记通过。
+
+## 2026-10-23 交接资料
+- Google Drive「代码视频文件」已创建《代码视频项目｜工作交接与恢复指南｜2026-10-23》：https://docs.google.com/document/d/1PKld_hb0_Dr-Wea515RvwHhg-8Yn_ri7NxoZNUh6uPA/edit
+- 首次生态渲染 run 39955109882：transitions 完整编码；graphics 在 frame 0 因旧版缺少 Arrow 失败。已修复为 Triangle，等待复验。
