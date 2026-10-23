@@ -44,15 +44,28 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install Chinese fonts
+      - name: Restore persistent CJK font cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/fonts/noto-cjk
+          key: cjk-noto-ubuntu-24.04-v1
+      - name: Ensure Chinese fonts available
+        timeout-minutes: 5
         run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.local/share/fonts/noto-cjk"
           if fc-list : family | grep -qi 'Noto Sans CJK'; then
-            echo 'Noto CJK already available; skip installation'
+            echo 'Noto CJK found; no download required'
           else
-            sudo apt-get update -qq
-            sudo apt-get install -y fonts-noto-cjk
+            echo 'Noto CJK missing; downloading once into reusable user font cache'
+            mkdir -p "$RUNNER_TEMP/cjk-package"
+            cd "$RUNNER_TEMP/cjk-package"
+            timeout 180s apt-get download fonts-noto-cjk
+            dpkg-deb -x fonts-noto-cjk_*.deb extracted
+            find extracted/usr/share/fonts -type f \\( -iname '*.ttc' -o -iname '*.otf' -o -iname '*.ttf' \\) -exec cp {} "$HOME/.local/share/fonts/noto-cjk/" \\;
             fc-cache -f
           fi
+          fc-list : family | grep -qi 'Noto Sans CJK' || { echo 'Noto CJK still missing' >&2; exit 1; }
           fc-match 'Noto Sans CJK SC' | head -1
         working-directory: .
       - name: Restore npm download cache
