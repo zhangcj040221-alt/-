@@ -1,15 +1,13 @@
 {
-  "run_id": 39955109882,
+  "run_id": 39955865334,
   "attempt": 1,
-  "job_status": "failure",
-  "sha": "6b359ce051cab0806f090f79d49a74fc020c7bb3",
+  "job_status": "success",
+  "sha": "84f465b846d778f2aa49cdf4d7d03e8326d73340",
   "branch": "main",
-  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39955109882",
-  "updated_utc": "2026-10-23T12:41:49.813146+00:00",
-  "artifact_name": "remotion-intro-mp4",
+  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39955865334",
+  "updated_utc": "2026-10-23T12:47:35.522120+00:00",
+  "artifact_name": "remotion-ecosystem-validation",
   "expected_files": [
-    "remotion-intro.mp4",
-    "remotion-mg-showcase.mp4",
     "ecosystem-transitions.mp4",
     "ecosystem-graphics.mp4"
   ]
