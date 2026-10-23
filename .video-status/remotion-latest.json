@@ -1,12 +1,12 @@
 {
-  "run_id": 39981181219,
+  "run_id": 39981386357,
   "attempt": 1,
-  "job_status": "failure",
-  "sha": "db0516b2159c4f99b5d2c208d70d287621798771",
+  "job_status": "success",
+  "sha": "2a702ba56a91b9a2aacb29c10c3efabee3690245",
   "branch": "main",
-  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39981181219",
-  "updated_utc": "2026-10-23T15:46:49.907855+00:00",
-  "artifact_name": "remotion-project-39981181219",
+  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39981386357",
+  "updated_utc": "2026-10-23T15:49:26.557857+00:00",
+  "artifact_name": "remotion-project-39981386357",
   "selected_target": "project",
   "selected_project": "water-cycle",
   "expected_files": [
