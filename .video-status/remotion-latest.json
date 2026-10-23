@@ -1,0 +1,10 @@
+{
+  "run_id": 39950797092,
+  "attempt": 1,
+  "job_status": "failure",
+  "sha": "3a3f154861948164af5b5fed9d466a22c458d36a",
+  "branch": "remotion-experience",
+  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39950797092",
+  "updated_utc": "2026-10-23T12:06:32.645606+00:00",
+  "artifact_name": "remotion-intro-mp4"
+}
