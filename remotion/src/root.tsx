@@ -9,12 +9,12 @@ import {EcosystemGraphics} from './ecosystem-graphics';
 import {EcosystemCaptions} from './ecosystem-captions';
 import {ThunderMusic} from './thunder-music';
 import {StoryVideo,storyDuration} from './production/story';
-import {waterCycle} from './production/examples';
+import waterCycle from '../projects/water-cycle.json';
 export const Root: React.FC = () => <>
  <Composition id="Intro" component={Intro} durationInFrames={150} fps={30} width={1920} height={1080} />
  <Composition id="MGShowcase" component={MGShowcase} durationInFrames={360} fps={30} width={1920} height={1080} />
  <Composition id="ThunderExplainer" component={ThunderExplainer} durationInFrames={1200} fps={30} width={1920} height={1080} />
- <Composition id="WaterCycle" component={StoryVideo} defaultProps={{plan:waterCycle}} durationInFrames={storyDuration(waterCycle)} fps={30} width={1920} height={1080} />
+ <Composition id="StoryTemplate" component={StoryVideo} defaultProps={{plan:waterCycle}} durationInFrames={18000} fps={30} width={1920} height={1080} />
  <Composition id="ThunderMusic" component={ThunderMusic} durationInFrames={1200} fps={30} width={1920} height={1080} />
  <Composition id="ThunderV2" component={ThunderV2} durationInFrames={1200} fps={30} width={1920} height={1080} />
  <Composition id="EcosystemTransitions" component={EcosystemTransitions} durationInFrames={390} fps={30} width={1920} height={1080} />
