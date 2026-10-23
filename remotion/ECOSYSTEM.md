@@ -57,3 +57,10 @@
 - 首次加入 Audio 引用的 run 39958155806 失败：缺少 audio-cue.wav；已补上在 Actions 中用 Python 标准库自动生成原创 440Hz PCM WAV 的步骤，无外部素材或费用。
 - 最新提交 30d0fee / 2562582：渲染中混入测试音频、ffprobe 检查音轨、ffmpeg volumedetect 排除静音。
 - 仍须等待最新 Actions 运行完成、下载 MP4 实测声音后才能标记通过。440Hz 音调仅用于验证音轨，不代表中文旁白或配音同步已经完成。
+
+## 第三阶段音频基础验收成功（2026-10-23）
+- GitHub Actions run 39958701641，提交 f568d265a88e12e31b18fee3047cb9fe072fcbf6，成功；artifact 12502489974。
+- 实际下载 ecosystem-captions.mp4（645299 字节、10.048 秒），独立 FFprobe 确认 1920×1080 H.264 视频及 48kHz 双声道 AAC 音轨。
+- FFmpeg volumedetect：mean_volume -33.2 dB，max_volume -30.1 dB，证实非静音。
+- 成熟复用方案：FFmpeg 内置 sine 测试源 → WAV → Remotion 官方 Audio → MP4；不依赖外部付费音频服务。
+- 验收边界：本次仅通过音频链路和中文字幕的基础验证，尚未接入中文 TTS 配音，也未验证真人语音与字幕同步。
