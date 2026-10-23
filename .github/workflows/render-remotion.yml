@@ -62,7 +62,7 @@ jobs:
             cd "$RUNNER_TEMP/cjk-package"
             timeout 180s apt-get download fonts-noto-cjk
             dpkg-deb -x fonts-noto-cjk_*.deb extracted
-            find extracted/usr/share/fonts -type f \\( -iname '*.ttc' -o -iname '*.otf' -o -iname '*.ttf' \\) -exec cp {} "$HOME/.local/share/fonts/noto-cjk/" \\;
+            find extracted/usr/share/fonts -type f -name '*.ttc' -exec cp -t "$HOME/.local/share/fonts/noto-cjk/" {} +
             fc-cache -f
           fi
           fc-list : family | grep -qi 'Noto Sans CJK' || { echo 'Noto CJK still missing' >&2; exit 1; }
