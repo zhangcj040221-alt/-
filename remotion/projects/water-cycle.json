@@ -7,13 +7,7 @@
       "accent": "#62e9e5",
       "label": "01 / THE WATER CYCLE",
       "visual": {
-        "type": "cycle",
-        "items": [
-          "蒸发",
-          "凝结",
-          "降水",
-          "回流"
-        ]
+        "type": "water-cycle"
       }
     },
     {
@@ -53,13 +47,7 @@
       "accent": "#ffd166",
       "label": "04 / PRECIPITATION",
       "visual": {
-        "type": "cycle",
-        "items": [
-          "云",
-          "降雨",
-          "河流",
-          "海洋"
-        ]
+        "type": "water-cycle"
       }
     }
   ],
