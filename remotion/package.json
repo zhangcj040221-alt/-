@@ -26,6 +26,8 @@
     "@remotion/paths": "4.0.367",
     "@remotion/captions": "4.0.367",
     "@remotion/lottie": "4.0.367",
-    "@meteocons/lottie": "^3.0.0"
+    "@meteocons/lottie": "^3.0.0",
+    "lucide-react": "^0.468.0",
+    "@iconify/react": "^5.0.2"
   }
 }
