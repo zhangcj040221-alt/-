@@ -36,24 +36,21 @@ jobs:
         working-directory: .
       - name: Generate test audio
         run: mkdir -p public && ffmpeg -hide_banner -loglevel error -y -f lavfi -i sine=frequency=440:duration=10:sample_rate=16000 -ac 1 public/audio-cue.wav
-      - name: Generate Chinese narration and aligned subtitles
-        run: |
-          python3 -m pip install --user edge-tts==7.2.7
-          python3 scripts/generate_narration.py
+      - name: Generate reusable original BGM and SFX
+        run: python3 scripts/generate_audio_assets.py
       - name: Render video
         run: |
           npm run render:ecosystem
           npm run render:graphics
           npm run render:captions
-          npm run render:narration
+          npm run render:thunder-music
       - name: Validate video
         run: |
           test -s out/ecosystem-transitions.mp4
           test -s out/ecosystem-graphics.mp4
           test -s out/ecosystem-captions.mp4
-          test -s out/chinese-narration.mp4
-          test -s public/narration.srt
-          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1 out/chinese-narration.mp4
+          test -s out/thunder-music.mp4
+          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1 out/thunder-music.mp4
           ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1 out/ecosystem-captions.mp4
           ffmpeg -hide_banner -i out/ecosystem-captions.mp4 -vn -af volumedetect -f null - 2>&1 | tee /tmp/remotion-audio-levels.txt
           grep -q 'max_volume:' /tmp/remotion-audio-levels.txt
@@ -68,8 +65,7 @@ jobs:
             remotion/out/ecosystem-transitions.mp4
             remotion/out/ecosystem-graphics.mp4
             remotion/out/ecosystem-captions.mp4
-            remotion/out/chinese-narration.mp4
-            remotion/public/narration.srt
+            remotion/out/thunder-music.mp4
           retention-days: 30
           if-no-files-found: error
       - name: Publish run locator
@@ -86,7 +82,7 @@ jobs:
           mkdir -p .video-status
           python3 - <<'PY'
           import json,os,datetime
-          status={"run_id":int(os.environ["RUN_ID"]),"attempt":int(os.environ["RUN_ATTEMPT"]),"job_status":os.environ["JOB_RESULT"],"sha":os.environ["RUN_SHA"],"branch":os.environ["RUN_REF"],"run_url":f'https://github.com/{os.environ["REPOSITORY"]}/actions/runs/{os.environ["RUN_ID"]}',"updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"artifact_name":"remotion-ecosystem-validation","expected_files":["ecosystem-transitions.mp4","ecosystem-graphics.mp4","ecosystem-captions.mp4","chinese-narration.mp4","narration.srt"]}
+          status={"run_id":int(os.environ["RUN_ID"]),"attempt":int(os.environ["RUN_ATTEMPT"]),"job_status":os.environ["JOB_RESULT"],"sha":os.environ["RUN_SHA"],"branch":os.environ["RUN_REF"],"run_url":f'https://github.com/{os.environ["REPOSITORY"]}/actions/runs/{os.environ["RUN_ID"]}',"updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"artifact_name":"remotion-ecosystem-validation","expected_files":["ecosystem-transitions.mp4","ecosystem-graphics.mp4","ecosystem-captions.mp4","thunder-music.mp4"]}
           with open('.video-status/remotion-latest.json','w') as f: json.dump(status,f,ensure_ascii=False,indent=2)
           PY
           git config user.name "github-actions[bot]"
