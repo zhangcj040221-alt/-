@@ -18,12 +18,12 @@ export const StoryVideo:React.FC<{plan:StoryPlan}>=({plan})=>{
  const accent=active.accent??'#62e9e5';
  return <AbsoluteFill style={{background:'linear-gradient(145deg,#071326,#153753)',color:'#eff8ff',fontFamily:'Noto Sans CJK SC, sans-serif',overflow:'hidden'}}>
   <div style={{position:'absolute',left:110,top:92,fontSize:27,letterSpacing:5,color:accent}}>{active.label??'MG SCIENCE / EXPLAINER'}</div>
-  <div style={{position:'absolute',left:110,top:waterStory?115:(active.visual?165:240),right:110,opacity,transform:`translateY(${(1-progress)*45}px)`}}>
+  <div style={{position:'absolute',left:110,top:waterStory?100:(active.visual?165:240),right:110,opacity,transform:`translateY(${(1-progress)*45}px)`}}>
    <div style={{height:8,width:170,background:accent,borderRadius:8,marginBottom:waterStory?15:55}}/>
-   <div style={{fontSize:waterStory?66:(active.visual?76:98),fontWeight:900,lineHeight:1.32}}>{active.title}</div>
-   <div style={{fontSize:waterStory?28:(active.visual?33:43),color:'#b8cee1',marginTop:waterStory?6:(active.visual?20:65),lineHeight:1.65}}>{active.body}</div>
+   <div style={{fontSize:waterStory?56:(active.visual?76:98),fontWeight:900,lineHeight:1.32}}>{active.title}</div>
+   <div style={{fontSize:waterStory?27:(active.visual?33:43),color:'#b8cee1',marginTop:waterStory?6:(active.visual?20:65),lineHeight:1.65}}>{active.body}</div>
   </div>
-  {waterStory&&<div style={{position:'absolute',left:75,right:75,top:250,height:690}}><WaterCycleScene phase={phase}/></div>}
+  {waterStory&&<div style={{position:'absolute',left:75,right:75,top:310,height:600}}><WaterCycleScene phase={phase}/></div>}
   {!waterStory&&active.visual&&<div style={{position:'absolute',left:100,right:100,top:475}}>{active.visual.type.startsWith('library-') ? <LibraryVisual visual={active.visual as LibrarySpec} accent={accent}/> : <MGVisual visual={active.visual as VisualSpec} accent={accent}/>}</div>}
   <div style={{position:'absolute',left:110,right:110,bottom:85,height:5,background:'#34536d'}}>
    <div style={{height:5,width:`${100*(frame+1)/storyDuration(plan,fps)}%`,background:accent}}/>
