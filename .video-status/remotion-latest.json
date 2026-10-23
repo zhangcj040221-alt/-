@@ -1,15 +1,16 @@
 {
-  "run_id": 39953873045,
+  "run_id": 39955109882,
   "attempt": 1,
-  "job_status": "success",
-  "sha": "3d2778ce918b3960b08739d6e56b53724891f5a6",
+  "job_status": "failure",
+  "sha": "6b359ce051cab0806f090f79d49a74fc020c7bb3",
   "branch": "main",
-  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39953873045",
-  "updated_utc": "2026-10-23T12:33:06.548063+00:00",
+  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39955109882",
+  "updated_utc": "2026-10-23T12:41:49.813146+00:00",
   "artifact_name": "remotion-intro-mp4",
   "expected_files": [
     "remotion-intro.mp4",
     "remotion-mg-showcase.mp4",
-    "thunder-v2.mp4"
+    "ecosystem-transitions.mp4",
+    "ecosystem-graphics.mp4"
   ]
 }
