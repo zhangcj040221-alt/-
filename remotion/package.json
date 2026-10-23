@@ -1,0 +1,17 @@
+{
+  "name": "remotion-experience",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "remotion render src/index.ts Intro out/remotion-intro.mp4 --codec h264 --crf 20",
+    "compositions": "remotion compositions src/index.ts",
+    "render:mg": "remotion render src/index.ts MGShowcase out/remotion-mg-showcase.mp4 --codec h264 --crf 20"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.367",
+    "remotion": "4.0.367",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}
