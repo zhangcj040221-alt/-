@@ -31,8 +31,14 @@ def project(name):
             raise ValueError("Accent must be a hex color")
         visual = scene.get("visual")
         if visual is not None:
-            if not isinstance(visual, dict) or visual.get("type") not in ("process", "cycle", "compare", "stat", "water-cycle"):
+            if not isinstance(visual, dict) or visual.get("type") not in ("process", "cycle", "compare", "stat", "water-cycle", "library-icon", "library-sequence", "library-lottie"):
                 raise ValueError("Unsupported MG visual type")
+            if visual["type"] == "library-icon" and not isinstance(visual.get("icon"), str):
+                raise ValueError("Library icon requires icon name")
+            if visual["type"] == "library-sequence" and (not isinstance(visual.get("icons"), list) or not 1 <= len(visual["icons"]) <= 5 or any(not isinstance(x, str) for x in visual["icons"])):
+                raise ValueError("Library sequence requires 1-5 icons")
+            if visual["type"] == "library-lottie" and not isinstance(visual.get("animation"), str):
+                raise ValueError("Library Lottie requires animation ID")
             items = visual.get("items", [])
             if not isinstance(items, list) or len(items) > 6 or any(not isinstance(item, str) or len(item) > 30 for item in items):
                 raise ValueError("MG visual items must be short labels")
