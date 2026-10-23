@@ -37,15 +37,25 @@ jobs:
           PY
       - name: Synthesize Mandarin
         run: python scripts/test_kokoro.py
-      - name: Verify audible audio
+      - name: Verify audible audio without apt or FFmpeg
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y ffmpeg
-          for file in out/kokoro-test/*.wav; do
-            test -s "$file"
-            ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 "$file"
-            ffmpeg -hide_banner -i "$file" -af volumedetect -f null - 2>&1 | grep max_volume
-          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import soundfile as sf
+          import numpy as np
+          folder = Path("out/kokoro-test")
+          items = json.loads((folder / "report.json").read_text(encoding="utf-8"))
+          assert len(items) == 2, "Expected two Mandarin samples"
+          for item in items:
+              data, rate = sf.read(folder / item["file"])
+              duration = len(data) / rate
+              peak = float(np.max(np.abs(data)))
+              print(item["file"], "duration", round(duration, 2), "peak", round(peak, 3), flush=True)
+              assert duration > 0.5 and peak > 0.005, "Empty or silent WAV"
+          PY
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: kokoro-chinese-tts-smoke-test
           path: |
