@@ -7,7 +7,7 @@
       "accent": "#62e9e5",
       "label": "01 / THE WATER CYCLE",
       "visual": {
-        "type": "water-cycle"
+        "type": "library-lottie", "animation": "pulse-dot"
       }
     },
     {
@@ -20,7 +20,7 @@
         "type": "library-sequence",
         "icons": [
           "sun",
-          "waves",
+          "iconify:mdi:water",
           "wind"
         ],
         "labels": [
