@@ -108,6 +108,10 @@ jobs:
               exit 1
             fi
           done
+          # Remotion ships ffprobe with shared libraries; make those discoverable.
+          COMPOSITOR_DIR="$(node -p "require('path').dirname(require.resolve('@remotion/compositor-linux-x64-gnu/package.json'))")"
+          echo "LD_LIBRARY_PATH=$COMPOSITOR_DIR:${LD_LIBRARY_PATH:-}" >> "$GITHUB_ENV"
+          LD_LIBRARY_PATH="$COMPOSITOR_DIR:${LD_LIBRARY_PATH:-}" "$RUNNER_TEMP/remotion-bin/ffprobe" -version | head -1
         working-directory: remotion
       - name: Generate test audio (captions only)
         if: env.RENDER_TARGET == 'ecosystem-captions' || env.RENDER_TARGET == 'all'
