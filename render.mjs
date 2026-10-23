@@ -12,7 +12,7 @@ const result = await renderVideo({
     workers: 1,
     logProgress: true,
     puppeteer: {
-      executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome',
+      headless: 'shell',
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
     },
     ffmpeg: {ffmpegPath: 'ffmpeg', ffmpegLogLevel: 'error'},
