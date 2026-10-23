@@ -44,12 +44,14 @@ jobs:
           npm run render:graphics
           npm run render:captions
           npm run render:thunder-music
+          npm run render:story
       - name: Validate video
         run: |
           test -s out/ecosystem-transitions.mp4
           test -s out/ecosystem-graphics.mp4
           test -s out/ecosystem-captions.mp4
           test -s out/thunder-music.mp4
+          test -s out/water-cycle.mp4
           ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1 out/thunder-music.mp4
           ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1 out/ecosystem-captions.mp4
           ffmpeg -hide_banner -i out/ecosystem-captions.mp4 -vn -af volumedetect -f null - 2>&1 | tee /tmp/remotion-audio-levels.txt
@@ -66,6 +68,7 @@ jobs:
             remotion/out/ecosystem-graphics.mp4
             remotion/out/ecosystem-captions.mp4
             remotion/out/thunder-music.mp4
+            remotion/out/water-cycle.mp4
           retention-days: 30
           if-no-files-found: error
       - name: Publish run locator
@@ -82,7 +85,7 @@ jobs:
           mkdir -p .video-status
           python3 - <<'PY'
           import json,os,datetime
-          status={"run_id":int(os.environ["RUN_ID"]),"attempt":int(os.environ["RUN_ATTEMPT"]),"job_status":os.environ["JOB_RESULT"],"sha":os.environ["RUN_SHA"],"branch":os.environ["RUN_REF"],"run_url":f'https://github.com/{os.environ["REPOSITORY"]}/actions/runs/{os.environ["RUN_ID"]}',"updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"artifact_name":"remotion-ecosystem-validation","expected_files":["ecosystem-transitions.mp4","ecosystem-graphics.mp4","ecosystem-captions.mp4","thunder-music.mp4"]}
+          status={"run_id":int(os.environ["RUN_ID"]),"attempt":int(os.environ["RUN_ATTEMPT"]),"job_status":os.environ["JOB_RESULT"],"sha":os.environ["RUN_SHA"],"branch":os.environ["RUN_REF"],"run_url":f'https://github.com/{os.environ["REPOSITORY"]}/actions/runs/{os.environ["RUN_ID"]}',"updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"artifact_name":"remotion-ecosystem-validation","expected_files":["ecosystem-transitions.mp4","ecosystem-graphics.mp4","ecosystem-captions.mp4","thunder-music.mp4","water-cycle.mp4"]}
           with open('.video-status/remotion-latest.json','w') as f: json.dump(status,f,ensure_ascii=False,indent=2)
           PY
           git config user.name "github-actions[bot]"
