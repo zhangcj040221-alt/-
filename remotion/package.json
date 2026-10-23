@@ -24,6 +24,8 @@
     "@remotion/transitions": "4.0.367",
     "@remotion/shapes": "4.0.367",
     "@remotion/paths": "4.0.367",
-    "@remotion/captions": "4.0.367"
+    "@remotion/captions": "4.0.367",
+    "@remotion/lottie": "4.0.367",
+    "@meteocons/lottie": "^3.0.0"
   }
 }
