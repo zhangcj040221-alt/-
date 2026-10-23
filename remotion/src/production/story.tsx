@@ -1,7 +1,8 @@
 import React from 'react';
 import {AbsoluteFill,interpolate,spring,useCurrentFrame,useVideoConfig} from 'remotion';
 import {AudioPlan,AudioTimeline} from './audio-timeline';
-export type StoryScene={title:string;body:string;seconds:number;accent?:string;label?:string};
+import {MGVisual,VisualSpec} from './mg-visuals';
+export type StoryScene={title:string;body:string;seconds:number;accent?:string;label?:string;visual?:VisualSpec};
 export type StoryPlan={scenes:StoryScene[];audio?:AudioPlan};
 export const storyDuration=(plan:StoryPlan,fps=30)=>plan.scenes.reduce((sum,s)=>sum+Math.round(s.seconds*fps),0);
 export const StoryVideo:React.FC<{plan:StoryPlan}>=({plan})=>{
@@ -13,11 +14,12 @@ export const StoryVideo:React.FC<{plan:StoryPlan}>=({plan})=>{
  const accent=active.accent??'#62e9e5';
  return <AbsoluteFill style={{background:'linear-gradient(145deg,#071326,#153753)',color:'#eff8ff',fontFamily:'Noto Sans CJK SC, sans-serif',overflow:'hidden'}}>
   <div style={{position:'absolute',left:110,top:92,fontSize:27,letterSpacing:5,color:accent}}>{active.label??'MG SCIENCE / EXPLAINER'}</div>
-  <div style={{position:'absolute',left:110,top:240,right:110,opacity,transform:`translateY(${(1-progress)*45}px)`}}>
+  <div style={{position:'absolute',left:110,top:active.visual?165:240,right:110,opacity,transform:`translateY(${(1-progress)*45}px)`}}>
    <div style={{height:8,width:170,background:accent,borderRadius:8,marginBottom:55}}/>
-   <div style={{fontSize:98,fontWeight:900,lineHeight:1.32}}>{active.title}</div>
-   <div style={{fontSize:43,color:'#b8cee1',marginTop:65,lineHeight:1.65}}>{active.body}</div>
+   <div style={{fontSize:active.visual?76:98,fontWeight:900,lineHeight:1.32}}>{active.title}</div>
+   <div style={{fontSize:active.visual?33:43,color:'#b8cee1',marginTop:active.visual?20:65,lineHeight:1.65}}>{active.body}</div>
   </div>
+  {active.visual&&<div style={{position:'absolute',left:100,right:100,top:535}}><MGVisual visual={active.visual} accent={accent}/></div>}
   <div style={{position:'absolute',left:110,right:110,bottom:85,height:5,background:'#34536d'}}>
    <div style={{height:5,width:`${100*(frame+1)/storyDuration(plan,fps)}%`,background:accent}}/>
   </div>
