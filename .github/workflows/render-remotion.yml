@@ -26,6 +26,9 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Render video
         run: npm run render
+      - name: Install ffprobe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+        working-directory: .
       - name: Validate video
         run: |
           test -s out/remotion-intro.mp4
