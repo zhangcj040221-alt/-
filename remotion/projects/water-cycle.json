@@ -17,11 +17,16 @@
       "accent": "#ffd166",
       "label": "02 / EVAPORATION",
       "visual": {
-        "type": "process",
-        "items": [
+        "type": "library-sequence",
+        "icons": [
+          "sun",
+          "waves",
+          "wind"
+        ],
+        "labels": [
           "太阳加热",
-          "水蒸发",
-          "进入大气"
+          "水分蒸发",
+          "水汽上升"
         ]
       }
     },
@@ -32,11 +37,16 @@
       "accent": "#62e9e5",
       "label": "03 / CONDENSATION",
       "visual": {
-        "type": "process",
-        "items": [
-          "水蒸气",
-          "遇冷",
-          "形成云"
+        "type": "library-sequence",
+        "icons": [
+          "wind",
+          "cloud",
+          "rain"
+        ],
+        "labels": [
+          "水汽",
+          "凝结成云",
+          "形成雨滴"
         ]
       }
     },
