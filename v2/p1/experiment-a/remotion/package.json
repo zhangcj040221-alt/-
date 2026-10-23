@@ -1,0 +1,16 @@
+{
+  "name": "v2-p1-particle-path",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "remotion render src/index.ts ParticlePath out/particle-path.mp4 --codec h264 --crf 18",
+    "compositions": "remotion compositions src/index.ts"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.367",
+    "remotion": "4.0.367",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}
