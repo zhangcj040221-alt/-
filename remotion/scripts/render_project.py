@@ -29,6 +29,17 @@ def project(name):
             raise ValueError("Scene duration must be 0.5-60 seconds")
         if "accent" in scene and not HEX.fullmatch(scene["accent"]):
             raise ValueError("Accent must be a hex color")
+        visual = scene.get("visual")
+        if visual is not None:
+            if not isinstance(visual, dict) or visual.get("type") not in ("process", "cycle", "compare", "stat"):
+                raise ValueError("Unsupported MG visual type")
+            items = visual.get("items", [])
+            if not isinstance(items, list) or len(items) > 6 or any(not isinstance(item, str) or len(item) > 30 for item in items):
+                raise ValueError("MG visual items must be short labels")
+            if visual["type"] in ("process", "cycle", "compare") and not items:
+                raise ValueError("MG diagram requires items")
+            if visual["type"] == "stat" and (not isinstance(visual.get("value"), (int, float)) or isinstance(visual.get("value"), bool)):
+                raise ValueError("Stat diagram requires numeric value")
         frames += round(seconds * 30)
     if frames > 30 * 600:
         raise ValueError("Project exceeds 10 minutes")
