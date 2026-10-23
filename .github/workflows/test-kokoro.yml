@@ -7,7 +7,7 @@ on:
       - 'remotion/scripts/test_kokoro.py'
       - '.github/workflows/test-kokoro.yml'
 permissions:
-  contents: read
+  contents: write
 jobs:
   test:
     runs-on: ubuntu-24.04
@@ -61,3 +61,25 @@ jobs:
           path: |
             remotion/out/kokoro-test/
           retention-days: 14
+
+      - name: Publish Kokoro run locator
+        if: always()
+        working-directory: .
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_SHA: ${{ github.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          mkdir -p .video-status
+          python - <<'PY'
+          import json,os,datetime
+          data={"run_id":int(os.environ["RUN_ID"]),"sha":os.environ["RUN_SHA"],"run_url":os.environ["RUN_URL"],"job_status":os.environ["JOB_STATUS"],"artifact_name":"kokoro-chinese-tts-smoke-test","updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat()}
+          with open(".video-status/kokoro-latest.json","w") as f:
+              json.dump(data,f,indent=2)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .video-status/kokoro-latest.json
+          git commit -m "ci: record Kokoro test run [skip ci]" || exit 0
+          git push origin HEAD:main
