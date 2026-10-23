@@ -24,15 +24,32 @@ jobs:
           node-version: '22'
       - name: Install Chinese fonts
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y fonts-noto-cjk
-          fc-cache -f
+          if fc-list : family | grep -qi 'Noto Sans CJK'; then
+            echo 'Noto CJK already available; skip installation'
+          else
+            sudo apt-get update -qq
+            sudo apt-get install -y fonts-noto-cjk
+            fc-cache -f
+          fi
           fc-match 'Noto Sans CJK SC' | head -1
         working-directory: .
+      - name: Restore npm download cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('remotion/package.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}-
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
-      - name: Install FFmpeg
-        run: sudo apt-get install -y ffmpeg
+        run: npm install --prefer-offline --no-audit --no-fund
+      - name: Ensure FFmpeg available
+        run: |
+          if command -v ffmpeg >/dev/null && command -v ffprobe >/dev/null; then
+            echo 'FFmpeg and ffprobe already available; skip installation'
+          else
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg
+          fi
         working-directory: .
       - name: Generate test audio
         run: mkdir -p public && ffmpeg -hide_banner -loglevel error -y -f lavfi -i sine=frequency=440:duration=10:sample_rate=16000 -ac 1 public/audio-cue.wav
