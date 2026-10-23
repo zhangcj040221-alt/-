@@ -38,3 +38,10 @@
 ## 2026-10-23 交接资料
 - Google Drive「代码视频文件」已创建《代码视频项目｜工作交接与恢复指南｜2026-10-23》：https://docs.google.com/document/d/1PKld_hb0_Dr-Wea515RvwHhg-8Yn_ri7NxoZNUh6uPA/edit
 - 首次生态渲染 run 39955109882：transitions 完整编码；graphics 在 frame 0 因旧版缺少 Arrow 失败。已修复为 Triangle，等待复验。
+
+## 2026-10-23 生态渲染验收通过
+- GitHub Actions run 39955865334，SHA 84f465b846d778f2aa49cdf4d7d03e8326d73340，所有步骤成功。
+- artifact 12501434522，名称 remotion-ecosystem-validation，包含两个 MP4。
+- ecosystem-transitions.mp4：1920×1080 / 30fps / 13.056秒 / 730997字节；官方转场通过。
+- ecosystem-graphics.mp4：1920×1080 / 30fps / 9.045333秒 / 582968字节；官方 shapes 与 paths 通过。
+- 已下载 artifact 并本地用 ffprobe 二次验证。注意：这证明编码与可播放文件存在；跨不同题材的实际复用尚待后续案例验证。
