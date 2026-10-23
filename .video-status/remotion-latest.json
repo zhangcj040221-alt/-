@@ -1,16 +1,17 @@
 {
-  "run_id": 39969160317,
+  "run_id": 39971486368,
   "attempt": 1,
   "job_status": "success",
-  "sha": "78d30f8f99261c7b7ea88ad81e362a2488d8d85b",
+  "sha": "bdf0ebcdb04f633c28a524db1b5208675b487afe",
   "branch": "main",
-  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39969160317",
-  "updated_utc": "2026-10-23T14:25:55.081394+00:00",
+  "run_url": "https://github.com/zhangcj040221-alt/-/actions/runs/39971486368",
+  "updated_utc": "2026-10-23T14:42:50.977880+00:00",
   "artifact_name": "remotion-ecosystem-validation",
   "expected_files": [
     "ecosystem-transitions.mp4",
     "ecosystem-graphics.mp4",
     "ecosystem-captions.mp4",
-    "thunder-music.mp4"
+    "thunder-music.mp4",
+    "water-cycle.mp4"
   ]
 }
