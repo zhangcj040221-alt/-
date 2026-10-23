@@ -45,3 +45,9 @@
 - ecosystem-transitions.mp4：1920×1080 / 30fps / 13.056秒 / 730997字节；官方转场通过。
 - ecosystem-graphics.mp4：1920×1080 / 30fps / 9.045333秒 / 582968字节；官方 shapes 与 paths 通过。
 - 已下载 artifact 并本地用 ffprobe 二次验证。注意：这证明编码与可播放文件存在；跨不同题材的实际复用尚待后续案例验证。
+
+## 第三阶段：字幕生态（2026-10-23，验证中）
+- 核对官方 Remotion v4.0.367 源码：@remotion/captions 导出 parseSrt、Caption、createTikTokStyleCaptions 等；已接入 @remotion/captions@4.0.367。
+- 新增 src/ecosystem-captions.tsx，采用标准 SRT 字幕、毫秒时间轴和帧同步展示；Composition EcosystemCaptions，脚本 npm run render:captions。
+- Actions 已加入 ecosystem-captions.mp4 渲染和非空检查。尚待确认成功 run、下载 MP4 及实测画面，未完成前不得标记验收通过。
+- 音频轨道尚未接入：当前没有合法可复用的配音或音效素材。不要把纯字幕演示误称为带配音视频。下一步先完成字幕验证，再使用自有/明确授权音频测试 Audio 轨道。
