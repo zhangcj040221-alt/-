@@ -31,6 +31,8 @@ jobs:
         working-directory: .
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Generate test audio
+        run: python3 -c 'import wave,math,struct,os; os.makedirs("public",exist_ok=True); w=wave.open("public/audio-cue.wav","wb"); w.setnchannels(1); w.setsampwidth(2); w.setframerate(16000); w.writeframes(b"".join(struct.pack("<h",int(7000*math.sin(2*math.pi*440*i/16000))) for i in range(160000))); w.close()'
       - name: Render video
         run: |
           npm run render:ecosystem
@@ -44,6 +46,7 @@ jobs:
           test -s out/ecosystem-transitions.mp4
           test -s out/ecosystem-graphics.mp4
           test -s out/ecosystem-captions.mp4
+          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1 out/ecosystem-captions.mp4
           ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate -of default=noprint_wrappers=1 out/ecosystem-transitions.mp4
           ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate -of default=noprint_wrappers=1 out/ecosystem-graphics.mp4
           ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate -of default=noprint_wrappers=1 out/ecosystem-captions.mp4
