@@ -7,8 +7,8 @@ const result = await renderVideo({
   settings: {
     outFile: 'hello-revideo.mp4',
     outDir: './out',
-    range: [0, 4],
-    dimensions: [1280, 720],
+    range: [0, 5],
+    dimensions: [1920, 1080],
     workers: 1,
     logProgress: true,
     puppeteer: {
