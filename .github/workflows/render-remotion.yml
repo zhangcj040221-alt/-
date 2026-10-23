@@ -78,12 +78,18 @@ jobs:
       - name: Install dependencies
         run: npm install --prefer-offline --no-audit --no-fund
       - name: Ensure FFmpeg available
+        timeout-minutes: 2
         run: |
+          set -euo pipefail
           if command -v ffmpeg >/dev/null && command -v ffprobe >/dev/null; then
-            echo 'FFmpeg and ffprobe already available; skip installation'
+            ffmpeg -version | head -1
+            ffprobe -version | head -1
           else
-            sudo apt-get update -qq
-            sudo apt-get install -y ffmpeg
+            echo 'FFmpeg missing; install with bounded timeout'
+            timeout 45s sudo apt-get update -qq
+            timeout 60s sudo apt-get install -y ffmpeg
+            command -v ffmpeg
+            command -v ffprobe
           fi
         working-directory: .
       - name: Generate test audio (captions only)
