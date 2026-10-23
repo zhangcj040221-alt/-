@@ -2,7 +2,7 @@ import React from 'react';
 import {interpolate,spring,useCurrentFrame,useVideoConfig} from 'remotion';
 
 export type VisualSpec={
- type:'process'|'cycle'|'compare'|'stat';
+ type:'process'|'cycle'|'compare'|'stat'|'water-cycle';
  items?:string[];
  value?:number;
  unit?:string;
@@ -13,6 +13,26 @@ export const MGVisual:React.FC<{visual:VisualSpec;accent:string}>=({visual,accen
  const reveal=(i:number)=>spring({frame:frame-i*8,fps,config:{damping:18,stiffness:90}});
  const card:React.CSSProperties={background:'rgba(255,255,255,.07)',border:'2px solid rgba(255,255,255,.18)',borderRadius:28,padding:'32px 26px',textAlign:'center',boxShadow:'0 12px 50px rgba(0,0,0,.12)'};
  const items=(visual.items??[]).slice(0,6);
+ if(visual.type==='water-cycle'){
+  const phase=(frame/Math.max(1,fps*5))*Math.PI*2;
+  const nodes=[{x:210,y:310,label:'蒸发',icon:'↑'},{x:500,y:95,label:'凝结',icon:'☁'},{x:790,y:310,label:'降水',icon:'↓'},{x:500,y:410,label:'回流',icon:'≈'}];
+  const orbit=nodes.map(n=>[n.x,n.y]);
+  const dropX=500+290*Math.cos(phase-Math.PI/2),dropY=270+150*Math.sin(phase-Math.PI/2);
+  return <svg viewBox="0 0 1000 530" style={{width:'100%',height:450,overflow:'visible'}}>
+   <defs><marker id="mg-arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0 L0 6 L8 3 Z" fill={accent}/></marker></defs>
+   <path d="M210 310 Q270 105 500 95 Q740 95 790 310 Q720 450 500 410 Q280 450 210 310" fill="none" stroke={accent} strokeWidth="8" opacity=".65" strokeDasharray="18 10" strokeDashoffset={-frame*2} markerEnd="url(#mg-arrow)"/>
+   <path d="M130 370 Q500 300 870 370 L870 500 L130 500 Z" fill="#176da4" opacity=".4"/>
+   <path d="M130 375 Q500 305 870 375" stroke="#74d9fa" strokeWidth="7" fill="none"/>
+   <circle cx="130" cy="100" r="53" fill="#ffd166" opacity=".95"/>
+   {Array.from({length:8},(_,i)=>{const a=i*Math.PI/4;return <line key={i} x1={130+67*Math.cos(a)} y1={100+67*Math.sin(a)} x2={130+86*Math.cos(a)} y2={100+86*Math.sin(a)} stroke="#ffd166" strokeWidth="8" strokeLinecap="round"/>})}
+   <g transform={`translate(${dropX} ${dropY})`}><path d="M0 -22 C-12 -3 -19 5 -19 15 A19 19 0 0 0 19 15 C19 5 12 -3 0 -22Z" fill="#83e3ff" stroke="#fff" strokeWidth="3"/></g>
+   {nodes.map((n,i)=><g key={i} opacity={reveal(i)} transform={`translate(${n.x} ${n.y}) scale(${.8+.2*reveal(i)})`}>
+    <rect x="-90" y="-45" width="180" height="90" rx="28" fill="#103654" stroke={accent} strokeWidth="4"/>
+    <text x="-50" y="14" fill={accent} fontSize="42" fontWeight="bold">{n.icon}</text>
+    <text x="8" y="12" fill="#fff" fontSize="30" fontWeight="bold">{n.label}</text>
+   </g>)}
+  </svg>;
+ }
  if(visual.type==='stat'){
   const value=visual.value??0;
   return <div style={{...card,width:650,margin:'auto',transform:`scale(${.8+.2*reveal(0)})`}}>
