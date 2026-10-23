@@ -28,6 +28,7 @@ jobs:
         run: |
           npm run render:ecosystem
           npm run render:graphics
+          npm run render:captions
       - name: Install ffprobe
         run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
         working-directory: .
@@ -35,6 +36,7 @@ jobs:
         run: |
           test -s out/ecosystem-transitions.mp4
           test -s out/ecosystem-graphics.mp4
+          test -s out/ecosystem-captions.mp4
           ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate -of default=noprint_wrappers=1 out/ecosystem-transitions.mp4
           ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate -of default=noprint_wrappers=1 out/ecosystem-graphics.mp4
       - uses: actions/upload-artifact@v4
@@ -43,6 +45,7 @@ jobs:
           path: |
             remotion/out/ecosystem-transitions.mp4
             remotion/out/ecosystem-graphics.mp4
+            remotion/out/ecosystem-captions.mp4
           retention-days: 30
           if-no-files-found: error
       - name: Publish run locator
@@ -59,7 +62,7 @@ jobs:
           mkdir -p .video-status
           python3 - <<'PY'
           import json,os,datetime
-          status={"run_id":int(os.environ["RUN_ID"]),"attempt":int(os.environ["RUN_ATTEMPT"]),"job_status":os.environ["JOB_RESULT"],"sha":os.environ["RUN_SHA"],"branch":os.environ["RUN_REF"],"run_url":f'https://github.com/{os.environ["REPOSITORY"]}/actions/runs/{os.environ["RUN_ID"]}',"updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"artifact_name":"remotion-ecosystem-validation","expected_files":["ecosystem-transitions.mp4","ecosystem-graphics.mp4"]}
+          status={"run_id":int(os.environ["RUN_ID"]),"attempt":int(os.environ["RUN_ATTEMPT"]),"job_status":os.environ["JOB_RESULT"],"sha":os.environ["RUN_SHA"],"branch":os.environ["RUN_REF"],"run_url":f'https://github.com/{os.environ["REPOSITORY"]}/actions/runs/{os.environ["RUN_ID"]}',"updated_utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"artifact_name":"remotion-ecosystem-validation","expected_files":["ecosystem-transitions.mp4","ecosystem-graphics.mp4","ecosystem-captions.mp4"]}
           with open('.video-status/remotion-latest.json','w') as f: json.dump(status,f,ensure_ascii=False,indent=2)
           PY
           git config user.name "github-actions[bot]"
