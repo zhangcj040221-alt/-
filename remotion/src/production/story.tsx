@@ -20,7 +20,7 @@ export const StoryVideo:React.FC<{plan:StoryPlan}>=({plan})=>{
    <div style={{fontSize:active.visual?76:98,fontWeight:900,lineHeight:1.32}}>{active.title}</div>
    <div style={{fontSize:active.visual?33:43,color:'#b8cee1',marginTop:active.visual?20:65,lineHeight:1.65}}>{active.body}</div>
   </div>
-  {active.visual&&<div style={{position:'absolute',left:100,right:100,top:535}}>(('type' in active.visual && active.visual.type.startsWith('library-')) ? <LibraryVisual visual={active.visual as LibrarySpec} accent={accent}/> : <MGVisual visual={active.visual as VisualSpec} accent={accent}/>)</div>}
+  {active.visual&&<div style={{position:'absolute',left:100,right:100,top:475}}>{active.visual.type.startsWith('library-') ? <LibraryVisual visual={active.visual as LibrarySpec} accent={accent}/> : <MGVisual visual={active.visual as VisualSpec} accent={accent}/>}</div>}
   <div style={{position:'absolute',left:110,right:110,bottom:85,height:5,background:'#34536d'}}>
    <div style={{height:5,width:`${100*(frame+1)/storyDuration(plan,fps)}%`,background:accent}}/>
   </div>
