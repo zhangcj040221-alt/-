@@ -6,7 +6,7 @@
 1. 进入本仓库的 **Actions** 页面。
 2. 选择 **Render Revideo Demo**，点击 **Run workflow**。
 3. 运行完成后打开该次记录，下载下方 **Artifacts → revideo-demo-mp4**。
-4. 解压得到 `hello-revideo.mp4`，约 4 秒、720p、30fps。
+4. 解压得到 `hello-revideo.mp4`，约 3.6 秒、1080p、30fps（首轮已实测）。
 
 首次提交也会自动尝试渲染一次。后续默认只在手动点击时运行，不会因每次改动画而浪费运行时长。
 
