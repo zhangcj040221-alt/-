@@ -17,19 +17,20 @@ jobs:
     env:
       DISABLE_TELEMETRY: 'true'
       PUPPETEER_SKIP_DOWNLOAD: '1'
-      CHROME_BIN: /usr/bin/google-chrome
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check system render dependencies
+      - name: Install FFmpeg
         run: |
-          node --version
-          google-chrome --version
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
           ffmpeg -version | head -n 1
       - name: Install pinned Revideo dependencies
         run: npm install --no-audit --no-fund
+      - name: Install matching Chrome Headless Shell
+        run: npx --no-install puppeteer browsers install chrome-headless-shell
       - name: Render 4-second MP4 headlessly
         run: npm run render
       - name: Validate MP4
