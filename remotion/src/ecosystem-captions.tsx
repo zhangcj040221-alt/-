@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill,interpolate,useCurrentFrame,useVideoConfig} from 'remotion';
+import {AbsoluteFill,Audio,staticFile,interpolate,useCurrentFrame,useVideoConfig} from 'remotion';
 import {parseSrt} from '@remotion/captions';
 
 // Reusable SRT-driven captions. Timing is in milliseconds, independent of FPS.
@@ -21,6 +21,7 @@ export const EcosystemCaptions:React.FC=()=>{
  const active=captions.find(c=>ms>=c.startMs&&ms<c.endMs);
  const enter=active?interpolate(ms,[active.startMs,active.startMs+260],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'}):0;
  return <AbsoluteFill style={{background:'linear-gradient(145deg,#0c1c32,#173e55)',color:'#eaf7ff',fontFamily:'Noto Sans CJK SC, Noto Sans CJK JP, sans-serif'}}>
+  <Audio src={staticFile('audio-cue.wav')} volume={0.35} />
   <div style={{position:'absolute',top:100,left:140,color:'#67e8f9',fontSize:35,letterSpacing:7}}>ECOSYSTEM / CAPTIONS + AUDIO CUE</div>
   <div style={{position:'absolute',top:215,left:140,fontSize:90,fontWeight:800}}>同一套字幕系统</div>
   <div style={{position:'absolute',top:340,left:140,fontSize:48,color:'#cbd5e1'}}>SRT 时间轴 → 自动切换字幕 → 独立音频轨道</div>
