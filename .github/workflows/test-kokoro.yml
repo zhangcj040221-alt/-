@@ -1,0 +1,45 @@
+name: Test Kokoro Chinese TTS
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: remotion
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install mature TTS packages
+        run: |
+          python -m pip install kokoro-onnx misaki[zh] soundfile huggingface_hub
+      - name: Download official model files
+        run: |
+          mkdir -p models
+          python - <<'PY'
+          from huggingface_hub import hf_hub_download
+          repo = "hexgrad/Kokoro-82M-v1.1-zh"
+          for name in ["kokoro-v1.1-zh.int8.onnx","voices-v1.1-zh.bin","config.json"]:
+              hf_hub_download(repo_id=repo, filename=name, local_dir="models")
+          PY
+      - name: Synthesize Mandarin
+        run: python scripts/test_kokoro.py
+      - name: Verify audible audio
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+          for file in out/kokoro-test/*.wav; do
+            test -s "$file"
+            ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 "$file"
+            ffmpeg -hide_banner -i "$file" -af volumedetect -f null - 2>&1 | grep max_volume
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-chinese-tts-smoke-test
+          path: |
+            remotion/out/kokoro-test/
+          retention-days: 14
