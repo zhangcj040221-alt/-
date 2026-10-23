@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "purpose": "personal-learning",
+  "collections": [
+    {
+      "id": "iconify",
+      "kind": "icons",
+      "homepage": "https://iconify.design/",
+      "free": true,
+      "integration": "local-svg-or-icon-package",
+      "status": "candidate"
+    },
+    {
+      "id": "lucide",
+      "kind": "icons",
+      "homepage": "https://lucide.dev/",
+      "free": true,
+      "integration": "lucide-react",
+      "status": "candidate"
+    },
+    {
+      "id": "tabler",
+      "kind": "icons",
+      "homepage": "https://tabler.io/icons",
+      "free": true,
+      "integration": "@tabler/icons-react",
+      "status": "candidate"
+    },
+    {
+      "id": "lottie",
+      "kind": "motion",
+      "homepage": "https://lottiefiles.github.io/lottie-docs/",
+      "free": true,
+      "integration": "remotion-lottie-frame-sync",
+      "status": "candidate"
+    },
+    {
+      "id": "motion-canvas",
+      "kind": "motion-engine",
+      "homepage": "https://motioncanvas.io/",
+      "free": true,
+      "integration": "reference-only",
+      "status": "candidate"
+    }
+  ],
+  "assets": []
+}
