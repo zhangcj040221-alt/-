@@ -1,0 +1,36 @@
+{
+  "project": "water-cycle",
+  "shots": [
+    {
+      "template": "concept-intro",
+      "subject": "水循环",
+      "visual": "sun-and-ocean"
+    },
+    {
+      "template": "process-flow",
+      "subject": "蒸发",
+      "visual": "water-to-vapor"
+    },
+    {
+      "template": "step-explainer",
+      "subject": "凝结",
+      "visual": "cloud-formation"
+    },
+    {
+      "template": "process-flow",
+      "subject": "降水",
+      "visual": "cloud-to-rain"
+    },
+    {
+      "template": "cycle-explainer",
+      "subject": "回流",
+      "visual": "runoff-to-ocean"
+    },
+    {
+      "template": "recap",
+      "subject": "水循环四阶段",
+      "visual": "cycle-overview"
+    }
+  ],
+  "note": "镜头策划资产；尚未自动绑定渲染器。"
+}
