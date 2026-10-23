@@ -27,11 +27,13 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends ffmpeg
           ffmpeg -version | head -n 1
-      - name: Install pinned Revideo dependencies
+      - name: Install Revideo dependencies (lockfile pending)
         run: npm install --no-audit --no-fund
+      - name: Verify dependencies
+        run: npm ls --depth=0
       - name: Install matching Chrome Headless Shell
         run: npx --no-install puppeteer browsers install chrome-headless-shell
-      - name: Render 4-second MP4 headlessly
+      - name: Render 5-second MP4 headlessly
         run: npm run render
       - name: Validate MP4
         run: |
