@@ -13,7 +13,8 @@
     "render:graphics": "remotion render src/index.ts EcosystemGraphics out/ecosystem-graphics.mp4 --codec h264 --crf 22",
     "render:thunder-music": "remotion render src/index.ts ThunderMusic out/thunder-music.mp4 --codec h264 --crf 22",
     "render:narration": "remotion render src/index.ts ChineseNarration out/chinese-narration.mp4 --codec h264 --crf 22",
-    "render:captions": "remotion render src/index.ts EcosystemCaptions out/ecosystem-captions.mp4 --codec h264 --crf 22"
+    "render:captions": "remotion render src/index.ts EcosystemCaptions out/ecosystem-captions.mp4 --codec h264 --crf 22",
+    "render:story": "remotion render src/index.ts WaterCycle out/water-cycle.mp4 --codec h264 --crf 22"
   },
   "dependencies": {
     "@remotion/cli": "4.0.367",
